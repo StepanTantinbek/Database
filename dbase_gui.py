@@ -1,6 +1,7 @@
 from time import time, ctime
 from os.path import exists, abspath, join, split as splitdir
 from hashlib import md5
+from string import ascii_lowercase
 
 
 PATH: str = r'c:\Users\lavro\Desktop\ProCoding\python_scripts\vsblue\baza.txt'
@@ -10,6 +11,7 @@ CODE_EXIT: int = 2
 CODE_NEG: int = 0
 POS_ANW: tuple = ("yes", "sure", "ye", "yeah")
 NEG_ANW: tuple = ("no", "nah")
+PASS_LEN_MIN: int = 5
 FILEPATH: str = abspath(__file__)
 DIRNAME, FILENAME = splitdir(FILEPATH)
 DB_FILE_NAME: str = r"baza.txt"
@@ -230,6 +232,62 @@ def checkbase(code: int=CODE_NEG) -> int:
         else:
             print("Database loaded sucsessfully.")
             return CODE_POS
+
+
+def checkreg(passw: str) -> bool:
+    if not (passw.isupper() or passw.islower()):
+        return True
+    else:
+        print("There is va weakness in your code:")
+        print("Use both high a low register for letters")
+
+
+def forblistcheck(passw: str) -> bool:
+    perfect_data = passw.lower().strip()
+    FORB_LIST: tuple = (
+        "qwer",
+        "qwerty",
+        "pass",
+        "password",
+        "abcde"
+    )
+    for word in FORB_LIST:
+        if word in perfect_data:
+            print("There is va weakness in your code:")
+            print(f"Popular char combination: ({word})")
+            return False
+    return True
+
+
+def charcheck(passw: str) -> bool:
+    perfect_data = passw.lower().strip()
+    letters: bool = False
+    numbers: bool = False
+    chars: bool = False
+    for char in perfect_data:
+        if char in ascii_lowercase:
+            letters = True
+        elif char in "".join(map(str, range(0, 10))):
+            numbers = True
+        else:
+            chars = True
+    return all((letters, numbers, chars))
+
+
+def lencheck(passw: str, min_len: int=PASS_LEN_MIN) -> bool:
+    return passw >= min_len
+
+
+def ceckpssw() -> str:
+    data: str = ""
+    while not all((
+        checkreg(data),
+        forblistcheck(data),
+        charcheck(data),
+        lencheck(data),
+    )):
+        data = input("\n\nTyzpe in your password.\n\n")
+    return data
 
 
 def main():
