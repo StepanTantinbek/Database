@@ -2,9 +2,10 @@ from time import time, ctime
 from os.path import exists, abspath, join, split as splitdir
 from hashlib import md5
 from string import ascii_lowercase
+from getpass import getpass as hiddeninput
 
 
-PATH: str = r'c:\Users\lavro\Desktop\ProCoding\python_scripts\vsblue\baza.txt'
+PATH: str = r'c:\Users\lavro\Desktop\ProCoding\python_scripts\vsblue\database_git\Database\baza.txt'
 SUPER_USER: int = 0
 CODE_POS: int = 1
 CODE_EXIT: int = 2
@@ -28,6 +29,17 @@ ROLES: tuple = (
 db: list = []
 
 
+def perfect_dt(data: str) -> str: return data.strip().lower()
+
+
+def notification(flag: bool, pos: str='', neg: str ='') -> bool:
+    if flag and pos:
+        print(pos)
+    elif not flag and neg:
+        print(neg)
+    return flag
+
+
 def hash(string: str) -> str:
     '''Encrypts data.'''
     h_str = md5(bytes(string, "utf-8"))
@@ -45,7 +57,7 @@ def user_answer(
     if notification:
         print(notification)
     while answ not in posanswer + neganswer:
-        answ = input(question).strip().lower()
+        answ = perfect_dt(input(question))
         if answ in posanswer:
             return CODE_POS
         elif answ in neganswer:
@@ -105,7 +117,7 @@ def identification(role: str="User") -> list:
     user_model["ID"] = str(int(db[-1]["ID"]) + 1)
     for i in tuple(db[0].keys())[1:-2]:
         if i == "PASSWORD":
-            user_model[i] = hash(input(f"Type in new <{i}>: "))
+            user_model[i] = hash(ceckpssw())
         else:
             user_model[i] = input(f"Type in new <{i}>: ")
     user_model["LSO"] = ctime(time())
@@ -190,7 +202,7 @@ def fill_db() -> None:
     print("\n\n\tSuper user identification: \n\n")
     for field in ORGPOL[1:-2]:
         if field == "PASSWORD":
-            userdata.append(hash(input(f"Type in new <{field}>: ")))
+            userdata.append(hash(ceckpssw()))
         else:
             userdata.append(input(f"Type in new <{field}>: "))
     userdata.append(ctime(time()))
@@ -234,59 +246,101 @@ def checkbase(code: int=CODE_NEG) -> int:
             return CODE_POS
 
 
-def checkreg(passw: str) -> bool:
-    if not (passw.isupper() or passw.islower()):
-        return True
-    else:
-        print("There is va weakness in your code:")
-        print("Use both high a low register for letters")
-
-
-def forblistcheck(passw: str) -> bool:
-    perfect_data = passw.lower().strip()
-    FORB_LIST: tuple = (
-        "qwer",
-        "qwerty",
-        "pass",
-        "password",
-        "abcde"
-    )
-    for word in FORB_LIST:
-        if word in perfect_data:
-            print("There is va weakness in your code:")
-            print(f"Popular char combination: ({word})")
-            return False
-    return True
-
-
-def charcheck(passw: str) -> bool:
-    perfect_data = passw.lower().strip()
-    letters: bool = False
-    numbers: bool = False
-    chars: bool = False
-    for char in perfect_data:
-        if char in ascii_lowercase:
-            letters = True
-        elif char in "".join(map(str, range(0, 10))):
-            numbers = True
-        else:
-            chars = True
-    return all((letters, numbers, chars))
-
-
 def lencheck(passw: str, min_len: int=PASS_LEN_MIN) -> bool:
-    return passw >= min_len
+    '''Check data length.'''
+    return notification(len(passw) >= min_len, neg=f"Password should be longer than {PASS_LEN_MIN - 1}")
 
 
 def ceckpssw() -> str:
+    '''Checks password.'''
+
+
+    def repeat_check(passw: str) -> bool:
+        '''Checks if any symbol is repeated to much.'''
+        MAX_RPT_CHR: int = 5
+        if passw:
+            perfect_data: str = perfect_dt(passw)
+            cnt: int = 1
+            for index, chr in enumerate(perfect_data[:-1]):
+                if chr == perfect_data[index + 1]:
+                    cnt += 1
+                    if cnt == MAX_RPT_CHR:
+                        print(
+                            "Characters should not be repeated "
+                            f"more than {MAX_RPT_CHR} times"
+                        )
+                        return False
+                    else:
+                        cnt = 1
+            return True
+        else:
+            print(
+                "Characters should not be repeated "
+                f"more than {MAX_RPT_CHR} times"
+            )
+
+
+    def charcheck(passw: str) -> bool:
+        '''Checks for types of chars in password.'''
+        perfect_data = perfect_dt(passw)
+        letters: bool = False
+        numbers: bool = False
+        chars: bool = False
+        for char in perfect_data:
+            if char in ascii_lowercase:
+                letters = True
+            elif char.isdigit():
+                numbers = True
+            else:
+                chars = True
+        return notification(
+            all(
+                (letters, numbers, chars)
+            ),
+                neg="Use letters, number and special characeters"
+        )
+
+
+    def checkreg(passw: str) -> bool:
+        '''Checks is password uses upper and lower register.'''
+        return notification(
+            passw and not (passw.isupper() or passw.islower()),
+            neg="You have to use both high a low register for letters"
+        )
+
+
+    def forblistcheck(passw: str) -> bool:
+        '''Checks if password has popular char combos.'''
+        if passw:
+            perfect_data = perfect_dt(passw)
+            FORB_LIST: tuple = (
+                "qwer",
+                "qwerty",
+                "pass",
+                "password",
+                "abcde"
+            )
+            for word in FORB_LIST:
+                if word in perfect_data:
+                    print(f"Popular char combination: ({word})")
+                    return False
+            return True
+        else:
+            print("Password cannot have popular character combos")
+
+     
     data: str = ""
+    print("Rules for password creation:")
     while not all((
         checkreg(data),
         forblistcheck(data),
         charcheck(data),
         lencheck(data),
+        repeat_check(data)
     )):
-        data = input("\n\nTyzpe in your password.\n\n")
+        print("\n\nType in new <PASSWORD>: ", end="")
+        data = hiddeninput()
+    print("\ngreat password\n\n")
     return data
 
 
