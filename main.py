@@ -1,8 +1,8 @@
 from time import time, ctime
 from os.path import exists, abspath, join, split as splitdir
-from hashlib import md5
-from string import ascii_lowercase
 from getpass import getpass as hiddeninput
+from .interact_funcs.base import read_row, list_to_strtab, perfect_dt
+from .interact_funcs.user import notification, user_answer
 
 
 PATH: str = r'c:\Users\lavro\Desktop\ProCoding\python_scripts\vsblue\database_git\Database\baza.txt'
@@ -12,11 +12,9 @@ CODE_EXIT: int = 2
 CODE_NEG: int = 0
 POS_ANW: tuple = ("yes", "sure", "ye", "yeah")
 NEG_ANW: tuple = ("no", "nah")
-PASS_LEN_MIN: int = 5
 FILEPATH: str = abspath(__file__)
 DIRNAME, FILENAME = splitdir(FILEPATH)
 DB_FILE_NAME: str = r"baza.txt"
-SEPTAB: str = "\t" * 7
 ORGPOL: tuple = (
     "ID", "LOGIN", "PASSWORD",
     "NAME", "SURNAME", "AGE",
@@ -30,50 +28,6 @@ db: list = []
 
 
 def perfect_dt(data: str) -> str: return data.strip().lower()
-
-
-def notification(flag: bool, pos: str='', neg: str ='') -> bool:
-    if flag and pos:
-        print(pos)
-    elif not flag and neg:
-        print(neg)
-    return flag
-
-
-def hash(string: str) -> str:
-    '''Encrypts data.'''
-    h_str = md5(bytes(string, "utf-8"))
-    return h_str.hexdigest()
-
-
-def user_answer(
-    question: str,
-    posanswer: tuple=POS_ANW,
-    neganswer: tuple=NEG_ANW,
-    notification: str=""
-) -> int:
-    '''Asks user a question and returns bool depending on answer.'''
-    answ: str = ""
-    if notification:
-        print(notification)
-    while answ not in posanswer + neganswer:
-        answ = perfect_dt(input(question))
-        if answ in posanswer:
-            return CODE_POS
-        elif answ in neganswer:
-            return CODE_NEG
-        else:
-            print("We did not understand you")
-            print(
-                "Please use answers presented: POSITIVES: "
-                f"({', '.join(posanswer)}) or NEGATIVES: "
-                f"({', '.join(neganswer)})"
-            )
-
-
-def read_row(string: str) -> tuple:
-    '''Returns fields for database.'''
-    return tuple(map(str.strip, string.split(SEPTAB)))
 
 
 def load_dbase() -> list:
@@ -94,11 +48,6 @@ def load_dbase() -> list:
             )):
                 raise ValueError("Incorrect data in the database")
     return db
-
-
-def list_to_strtab(row: list) -> str:
-    '''Makes string made of database fields.'''
-    return SEPTAB.join(map(str, tuple(row)))
 
 
 def save_dbase(dbase: list) -> None:
@@ -244,104 +193,6 @@ def checkbase(code: int=CODE_NEG) -> int:
         else:
             print("Database loaded sucsessfully.")
             return CODE_POS
-
-
-def lencheck(passw: str, min_len: int=PASS_LEN_MIN) -> bool:
-    '''Check data length.'''
-    return notification(len(passw) >= min_len, neg=f"Password should be longer than {PASS_LEN_MIN - 1}")
-
-
-def ceckpssw() -> str:
-    '''Checks password.'''
-
-
-    def repeat_check(passw: str) -> bool:
-        '''Checks if any symbol is repeated to much.'''
-        MAX_RPT_CHR: int = 5
-        if passw:
-            perfect_data: str = perfect_dt(passw)
-            cnt: int = 1
-            for index, chr in enumerate(perfect_data[:-1]):
-                if chr == perfect_data[index + 1]:
-                    cnt += 1
-                    if cnt == MAX_RPT_CHR:
-                        print(
-                            "Characters should not be repeated "
-                            f"more than {MAX_RPT_CHR} times"
-                        )
-                        return False
-                    else:
-                        cnt = 1
-            return True
-        else:
-            print(
-                "Characters should not be repeated "
-                f"more than {MAX_RPT_CHR} times"
-            )
-
-
-    def charcheck(passw: str) -> bool:
-        '''Checks for types of chars in password.'''
-        perfect_data = perfect_dt(passw)
-        letters: bool = False
-        numbers: bool = False
-        chars: bool = False
-        for char in perfect_data:
-            if char in ascii_lowercase:
-                letters = True
-            elif char.isdigit():
-                numbers = True
-            else:
-                chars = True
-        return notification(
-            all(
-                (letters, numbers, chars)
-            ),
-                neg="Use letters, number and special characeters"
-        )
-
-
-    def checkreg(passw: str) -> bool:
-        '''Checks is password uses upper and lower register.'''
-        return notification(
-            passw and not (passw.isupper() or passw.islower()),
-            neg="You have to use both high a low register for letters"
-        )
-
-
-    def forblistcheck(passw: str) -> bool:
-        '''Checks if password has popular char combos.'''
-        if passw:
-            perfect_data = perfect_dt(passw)
-            FORB_LIST: tuple = (
-                "qwer",
-                "qwerty",
-                "pass",
-                "password",
-                "abcde"
-            )
-            for word in FORB_LIST:
-                if word in perfect_data:
-                    print(f"Popular char combination: ({word})")
-                    return False
-            return True
-        else:
-            print("Password cannot have popular character combos")
-
-     
-    data: str = ""
-    print("Rules for password creation:")
-    while not all((
-        checkreg(data),
-        forblistcheck(data),
-        charcheck(data),
-        lencheck(data),
-        repeat_check(data)
-    )):
-        print("\n\nType in new <PASSWORD>: ", end="")
-        data = hiddeninput()
-    print("\ngreat password\n\n")
-    return data
 
 
 def main():
