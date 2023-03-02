@@ -3,7 +3,7 @@
 '''This file contains fucntions that format data.'''
 
 
-SEPTAB: str = "\t" * 7
+from ..const import SEPTAB
 
 
 def perfect_dt(data: str) -> str: return data.strip().lower()

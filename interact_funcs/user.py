@@ -1,8 +1,5 @@
-from .base import perfect_dt
-
-
-POS_ANW: tuple = ("yes", "sure", "ye", "yeah")
-NEG_ANW: tuple = ("no", "nah")
+from interact_funcs.base import perfect_dt
+from ..const import POS_ANW, NEG_ANW
 
 
 def notification(flag: bool, pos: str='', neg: str ='') -> bool:

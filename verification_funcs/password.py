@@ -1,8 +1,9 @@
-from ..interact_funcs.base import perfect_dt
-from ..interact_funcs.user import notification
+from interact_funcs.base import perfect_dt
+from interact_funcs.user import notification
 from string import ascii_lowercase
-from .auxiliary import lencheck
+from verification_funcs.auxiliary import lencheck
 from getpass import getpass as hiddeninput
+from ..const import MAX_RPT_CHR
 
 
 def ceckpssw() -> str:
@@ -11,7 +12,6 @@ def ceckpssw() -> str:
 
     def repeat_check(passw: str) -> bool:
         '''Checks if any symbol is repeated to much.'''
-        MAX_RPT_CHR: int = 5
         if passw:
             perfect_data: str = perfect_dt(passw)
             cnt: int = 1

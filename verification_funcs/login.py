@@ -1,1 +1,1 @@
-from .auxiliary import lencheck
+from verification_funcs.auxiliary import lencheck
