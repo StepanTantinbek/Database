@@ -3,16 +3,18 @@
 '''This file contains fucntions that format data.'''
 
 
-from ..const import SEPTAB
+from const import SEPTAB
 
 
-def perfect_dt(data: str) -> str: return data.strip().lower()
+def perfect_dt(data: str) -> str:
+    '''removes space chars and lowers all capital letters.'''
+    return data.strip().lower()
 
 
 def read_row(string: str) -> tuple:
-    '''Returns fields for database.'''
+    '''makes a list of data that user has to input.'''
     return tuple(map(str.strip, string.split(SEPTAB)))
 
 def list_to_strtab(row: list) -> str:
-    '''Makes string made of database fields.'''
+    '''makes string with data types for user to put fot the database file.'''
     return SEPTAB.join(map(str, tuple(row)))

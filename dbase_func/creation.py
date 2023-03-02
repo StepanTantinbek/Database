@@ -1,10 +1,10 @@
-from ..interact_funcs.user  import user_answer
-from ..interact_funcs.base import list_to_strtab, read_row
+from interact_funcs.user  import user_answer
+from interact_funcs.base import list_to_strtab, read_row
 from os.path import join, exists, split as splitdir
 from time import time, ctime
-from ..main import FILEPATH
-from ..verification_funcs.password import ceckpssw
-from ..const import (
+from main import FILEPATH
+from verification_funcs.password import ceckpssw
+from const import (
     DB_FILE_NAME,
     PATH,
     ROLES,
@@ -16,7 +16,7 @@ DIRNAME, FILENAME = splitdir(FILEPATH)
 
 
 def create_db() -> None:
-    '''Creates new database.'''
+    '''creates database.'''
     if user_answer(
         "Would you like to create the database file in the same directory?: "
     ):
@@ -33,7 +33,7 @@ def create_db() -> None:
         if "PATH: str = " in oldfile[index]:
             oldfile[index] = f"PATH: str = r'{path}'\n"
             break
-    with open(FILEPATH, "wt", encoding="utf-8") as writing:
+    with open(CONST_PATH, "wt", encoding="utf-8") as writing:
         print(*oldfile, sep="", end="", file=writing)
     with open(path, "wt", encoding="utf-8") as new_file:
         print("", end="", file=new_file)
@@ -45,7 +45,7 @@ def create_db() -> None:
 
 
 def load_dbase() -> list:
-    '''Loads database in the code.'''
+    '''loads database to the code to work with it.'''
     user_model: dict = {}
     db = []
     with open(PATH, "rt", encoding="utf-8") as dbase:
@@ -65,7 +65,7 @@ def load_dbase() -> list:
 
 
 def save_dbase(dbase: list) -> None:
-    '''Saves database.'''
+    '''uploads database to the main file.'''
     log_front: str = list_to_strtab(dbase[0].keys())
     with open(PATH, "wt", encoding="utf-8") as file_save:
         print(log_front, file=file_save)
@@ -74,7 +74,7 @@ def save_dbase(dbase: list) -> None:
 
 
 def fill_db() -> None:
-    '''Fills empty database and adds sviser.'''
+    '''if database is empty, it will add superviser, database ready.'''
     userdata: list = [0, ]
     print("\n\n\tSuper user identification: \n\n")
     for field in ORGPOL[1:-2]:
@@ -90,7 +90,7 @@ def fill_db() -> None:
 
 
 def checkbase(code: bool=False) -> bool:
-    '''Checks if database exists.'''
+    '''checks if database is exist or damaged.'''
     notification: str = ""
     if not exists(PATH) or code:
         if not code:

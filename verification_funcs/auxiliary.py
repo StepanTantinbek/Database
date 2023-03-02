@@ -4,7 +4,7 @@
 and encrypting password and login.'''
 
 
-from ..const import  PASS_LEN_MIN
+from const import  PASS_LEN_MIN
 from hashlib import md5
 from interact_funcs.user import notification
 

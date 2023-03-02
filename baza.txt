@@ -1,0 +1,2 @@
+ID							LOGIN							PASSWORD							NAME							SURNAME							AGE							NICKNAME							LSO							ROLE
+0							Stepanator999							-7043825370137836315							Stepan							Lavrov							16							Stepik_bug							Thu Mar  2 17:20:25 2023							Admin

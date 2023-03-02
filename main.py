@@ -1,5 +1,5 @@
 from os.path import abspath
-from .dbase_func.creation import checkbase, load_dbase, save_dbase
+from dbase_func.creation import *
 
 
 FILEPATH: str = abspath(__file__)

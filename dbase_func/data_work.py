@@ -1,11 +1,11 @@
 from verification_funcs.password import ceckpssw
 from verification_funcs.auxiliary import hash
 from time import time, ctime
-from..const import SUPER_USER
+from const import SUPER_USER
 
 
 def identification(role: str="User") -> list:
-    '''Adds new user to database.'''
+    '''adds new user to database.'''
     global db
     user_model: dict = {}
     user_model["ID"] = str(int(db[-1]["ID"]) + 1)
@@ -20,7 +20,7 @@ def identification(role: str="User") -> list:
 
 
 def user_delete(userid: int) -> None:
-    '''Deletes user from database.'''
+    '''deletes user from database.'''
     if str(userid) == str(SUPER_USER):
         print("Cannot delete this user.")
     else:
@@ -33,7 +33,7 @@ def user_delete(userid: int) -> None:
 
 
 def user_reg() -> None:
-    '''Menu.'''
+    '''menu of what user is able to do.'''
     request: str = ""
     P_S, P_L, P_C, P_E = range(1, 5)
     MENU_OPTS: dict = {
