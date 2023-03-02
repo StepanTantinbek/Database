@@ -19,3 +19,17 @@ interaction_funcs-package of functions to interaxt with user
         **perfect_dt-removes space chars and lowers all capital letters
         **read_row-makes a list of data that user has to input
         **list_to_strtab-makes string with data types for user to put fot the database file
+    *user.py-includes functions to interract with user
+        **notification-prints negative or positive comment depending on statement status
+        **user_answer-asks user a question and returns result depending on answer
+verification_funcs-package of functions
+    *auxiliary.py-includes functions to work with users personal data
+        **hash-encrypts data
+        **lencheck-checks string length
+    *login.py-(BEING DEVELOPED)includes functions to work with users login
+    *password.py-includes functions to create a strong password
+        **checkpssw-checks the password
+            ***repeat_check-checks if any symbol is repeated to many times
+            ***charcheck-checks for types of chars needed in password
+            ***checkreg-checks is password uses upper and lower register
+            ***forblistcheck-checks if password has popular char combos

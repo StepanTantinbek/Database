@@ -6,12 +6,12 @@ from getpass import getpass as hiddeninput
 from const import MAX_RPT_CHR
 
 
-def ceckpssw() -> str:
-    '''Checks password.'''
+def checkpssw() -> str:
+    '''checks password.'''
 
 
     def repeat_check(passw: str) -> bool:
-        '''Checks if any symbol is repeated to much.'''
+        '''checks if any symbol is repeated to many times.'''
         if passw:
             perfect_data: str = perfect_dt(passw)
             cnt: int = 1
@@ -35,7 +35,7 @@ def ceckpssw() -> str:
 
 
     def charcheck(passw: str) -> bool:
-        '''Checks for types of chars in password.'''
+        '''checks for types of chars need in password.'''
         perfect_data = perfect_dt(passw)
         letters: bool = False
         numbers: bool = False
@@ -56,7 +56,7 @@ def ceckpssw() -> str:
 
 
     def checkreg(passw: str) -> bool:
-        '''Checks is password uses upper and lower register.'''
+        '''checks is password uses upper and lower register.'''
         return notification(
             passw and not (passw.isupper() or passw.islower()),
             neg="You have to use both high a low register for letters"
@@ -64,7 +64,7 @@ def ceckpssw() -> str:
 
 
     def forblistcheck(passw: str) -> bool:
-        '''Checks if password has popular char combos.'''
+        '''checks if password has popular char combos.'''
         if passw:
             perfect_data = perfect_dt(passw)
             FORB_LIST: tuple = (

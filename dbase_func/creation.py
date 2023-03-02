@@ -3,7 +3,7 @@ from interact_funcs.base import list_to_strtab, read_row
 from os.path import join, exists, split as splitdir
 from time import time, ctime
 from main import FILEPATH
-from verification_funcs.password import ceckpssw
+from verification_funcs.password import checkpssw
 from const import (
     DB_FILE_NAME,
     PATH,
@@ -79,7 +79,7 @@ def fill_db() -> None:
     print("\n\n\tSuper user identification: \n\n")
     for field in ORGPOL[1:-2]:
         if field == "PASSWORD":
-            userdata.append(hash(ceckpssw()))
+            userdata.append(hash(checkpssw()))
         else:
             userdata.append(input(f"Type in new <{field}>: "))
     userdata.append(ctime(time()))

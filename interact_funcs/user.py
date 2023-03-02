@@ -3,7 +3,7 @@ from const import POS_ANW, NEG_ANW
 
 
 def notification(flag: bool, pos: str='', neg: str ='') -> bool:
-    '''Bool function that prints negative or positive comment.'''
+    '''prints negative or positive comment depending on statement status.'''
     if flag and pos:
         print(pos)
     elif not flag and neg:
@@ -17,7 +17,7 @@ def user_answer(
     neganswer: tuple=NEG_ANW,
     notification: str=""
 ) -> int:
-    '''Asks user a question and returns bool depending on answer.'''
+    '''asks user a question and returns result depending on answer.'''
     answ: str = ""
     if notification:
         print(notification)
