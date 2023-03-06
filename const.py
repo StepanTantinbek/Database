@@ -1,5 +1,7 @@
 
 
+UNKNOWN: int = -1
+CODE_LANG: int = UNKNOWN
 SUPER_USER: int = 0
 PATH: str = r'c:\Users\lavro\Desktop\ProCoding\python_scripts\vsblue\database_git\Database\baza.txt'
 CONST_FILE_NAME: str = "const.py"
