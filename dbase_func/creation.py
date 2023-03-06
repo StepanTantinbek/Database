@@ -1,3 +1,8 @@
+
+
+'''includes functions to create database.'''
+
+
 from interact_funcs.user  import user_answer
 from interact_funcs.base import list_to_strtab, read_row
 from os.path import join, exists, split as splitdir

@@ -1,6 +1,6 @@
 
 
-'''This file contains fucntions that format data.'''
+'''includes functions to format data input by user for obtainment.'''
 
 
 from const import SEPTAB

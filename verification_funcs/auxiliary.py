@@ -1,7 +1,6 @@
 
 
-'''This file contains functions needed for checking
-and encrypting password and login.'''
+'''includes functions to work with users personal data.'''
 
 
 from const import  PASS_LEN_MIN

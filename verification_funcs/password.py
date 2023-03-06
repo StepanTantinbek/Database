@@ -1,3 +1,8 @@
+
+
+'''includes functions to create a strong password.'''
+
+
 from interact_funcs.base import perfect_dt
 from interact_funcs.user import notification
 from string import ascii_lowercase
