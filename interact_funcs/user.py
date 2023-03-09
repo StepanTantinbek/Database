@@ -4,7 +4,7 @@
 
 
 from interact_funcs.base import perfect_dt
-from const import POS_ANW, NEG_ANW
+from data.const import POS_ANW, NEG_ANW
 
 
 def notification(flag: bool, pos: str='', neg: str ='') -> bool:

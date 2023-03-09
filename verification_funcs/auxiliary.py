@@ -3,7 +3,7 @@
 '''includes functions to work with users personal data.'''
 
 
-from const import  PASS_LEN_MIN
+from data.const import  PASS_LEN_MIN
 from hashlib import md5
 from interact_funcs.user import notification
 

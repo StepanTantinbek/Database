@@ -6,7 +6,7 @@
 from verification_funcs.password import ceckpssw
 from verification_funcs.auxiliary import hash
 from time import time, ctime
-from const import SUPER_USER
+from data.const import SUPER_USER
 
 
 def identification(role: str="User") -> list:

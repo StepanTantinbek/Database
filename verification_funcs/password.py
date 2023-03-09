@@ -8,7 +8,7 @@ from interact_funcs.user import notification
 from string import ascii_lowercase
 from verification_funcs.auxiliary import lencheck
 from getpass import getpass as hiddeninput
-from const import MAX_RPT_CHR
+from data.const import MAX_RPT_CHR
 
 
 def checkpssw() -> str:

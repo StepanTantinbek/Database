@@ -3,7 +3,7 @@
 '''includes functions to format data input by user for obtainment.'''
 
 
-from const import SEPTAB
+from data.const import SEPTAB
 
 
 def perfect_dt(data: str) -> str:

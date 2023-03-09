@@ -9,12 +9,12 @@ from os.path import join, exists, split as splitdir
 from time import time, ctime
 from main import FILEPATH
 from verification_funcs.password import checkpssw
-from const import (
+from data.const import (
     DB_FILE_NAME,
     PATH,
     ROLES,
     ORGPOL,
-    CONST_FILE_NAME
+    CONSTPATH
 )
 
 DIRNAME, FILENAME = splitdir(FILEPATH)
@@ -31,14 +31,13 @@ def create_db() -> None:
             "Where would you like to create database: "
             ), DB_FILE_NAME
         )
-    CONST_PATH: str = join(DIRNAME, CONST_FILE_NAME)
-    with open(CONST_PATH, "rt", encoding="utf-8") as pathchange:
+    with open(CONSTPATH, "rt", encoding="utf-8") as pathchange:
         oldfile: list = pathchange.readlines()
     for index in range(len(oldfile)):
         if "PATH: str = " in oldfile[index]:
             oldfile[index] = f"PATH: str = r'{path}'\n"
             break
-    with open(CONST_PATH, "wt", encoding="utf-8") as writing:
+    with open(CONSTPATH, "wt", encoding="utf-8") as writing:
         print(*oldfile, sep="", end="", file=writing)
     with open(path, "wt", encoding="utf-8") as new_file:
         print("", end="", file=new_file)
