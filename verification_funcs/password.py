@@ -3,17 +3,14 @@
 '''includes functions to create a strong password.'''
 
 
-from interact_funcs.base import perfect_dt
-from interact_funcs.user import notification
-from string import ascii_lowercase
-from verification_funcs.auxiliary import lencheck
-from getpass import getpass as hiddeninput
-from data.const import MAX_RPT_CHR
-
-
 def checkpssw() -> str:
     '''checks password.'''
-
+    from interact_funcs.base import perfect_dt
+    from interact_funcs.user import notification
+    from string import ascii_lowercase
+    from verification_funcs.auxiliary import lencheck
+    from getpass import getpass as hiddeninput
+    from data.const import MAX_RPT_CHR
 
     def repeat_check(passw: str) -> bool:
         '''checks if any symbol is repeated to many times.'''
@@ -85,7 +82,7 @@ def checkpssw() -> str:
         else:
             print("Password cannot have popular character combos")
 
-     
+
     data: str = ""
     print("Rules for password creation:")
     while not all((

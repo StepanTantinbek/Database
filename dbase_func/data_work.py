@@ -3,14 +3,11 @@
 '''includes functions to modify database.'''
 
 
-from verification_funcs.password import ceckpssw
-from verification_funcs.auxiliary import hash
-from time import time, ctime
-from data.const import SUPER_USER
-
-
 def identification(role: str="User") -> list:
     '''adds new user to database.'''
+    from verification_funcs.password import ceckpssw
+    from time import time, ctime
+    from verification_funcs.auxiliary import hash
     global db
     user_model: dict = {}
     user_model["ID"] = str(int(db[-1]["ID"]) + 1)
@@ -26,6 +23,7 @@ def identification(role: str="User") -> list:
 
 def user_delete(userid: int) -> None:
     '''deletes user from database.'''
+    from data.const import SUPER_USER
     if str(userid) == str(SUPER_USER):
         print("Cannot delete this user.")
     else:

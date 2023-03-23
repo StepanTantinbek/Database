@@ -1,17 +1,16 @@
 from os.path import abspath
-from dbase_func.creation import *
-from localise_func.interact_user import get_code
-from localise_func.translator import lang_print_gen
+from dbase_func.creation import checkbase, load_dbase, save_dbase
+from localise_func.translator import localized_print
+from dbase_func.console import checking_settings
+from sys import argv
 
 
 FILEPATH: str = abspath(__file__)
-code_lang: int
 
 
 def main():
     '''Main program cycle.'''
-    globals()["code_lang"] = get_code()
-    print = lang_print_gen(code_lang)
+    checking_settings(argv)
     if checkbase():
         try:
             db: list = load_dbase()
@@ -20,7 +19,7 @@ def main():
         ...
         save_dbase(db)
     else:
-        print("Programm ended sucsessfully")
+        localized_print("Programm ended sucsessfully")
 
 
 if __name__ == "__main__":

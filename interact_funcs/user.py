@@ -23,19 +23,20 @@ def user_answer(
     notification: str=""
 ) -> int:
     '''asks user a question and returns result depending on answer.'''
+    from localise_func.translator import localized_print
     answ: str = ""
     if notification:
-        print(notification)
+        localized_print(notification)
     while answ not in posanswer + neganswer:
-        answ = perfect_dt(input(question))
+        localized_print(question, end ='')
+        answ = perfect_dt(input())
         if answ in posanswer:
             return True
         elif answ in neganswer:
             return False
         else:
-            print("We did not understand you")
-            print(
-                "Please use answers presented: POSITIVES: "
-                f"({', '.join(posanswer)}) or NEGATIVES: "
-                f"({', '.join(neganswer)})"
-            )
+            localized_print("We did not understand you")
+            localized_print("Please use answers presented: POSITIVES: ", end ='')
+            print(', '.join(posanswer) ,end = ' ')
+            localized_print("or NEGATIVES: ")
+            print(', '.join(neganswer))
