@@ -10,6 +10,7 @@ FILEPATH: str = abspath(__file__)
 
 def main():
     '''Main program cycle.'''
+    localized_print("Hello")
     checking_settings(argv)
     if checkbase():
         try:

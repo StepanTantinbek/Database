@@ -17,7 +17,13 @@ def get_localized_print(code: int = 0) -> Callable[[str], None]:
         language_code = code
     def lang_print(word: str, end = '\n') -> None:
         '''Prints phrase in chosen language.'''
-        print(VOCAB[word][ language_code - TUPLE_NUMERATION_CONV], end = end)
+        try:
+            context: str = VOCAB[word][ language_code - TUPLE_NUMERATION_CONV]
+        except KeyError:
+            context: str = word
+        except:
+            print("Unknown error occured with translation")
+        print(context, end = end)
     return lang_print
 
 localized_print: Callable[[str], str] = get_localized_print()

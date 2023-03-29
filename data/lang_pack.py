@@ -159,6 +159,26 @@ VOCAB: dict = {
                 'not found in the database',
                 'non trovato nel database',
             ),
+            'Switches language to Russian.':(
+                'Меняет язык на Русский',
+                'Switches language to Russian.',
+                'Cambia el idioma a Ruso.',
+            ),
+            'Switches language to English.':(
+                'Меняет язык на Английский',
+                'Switches language to English.',
+                'Cambia el idioma a Inglés.',
+            ),
+            'Switches language to Spanish.':(
+                'Меняет язык на Испанский',
+                'Switches language to Spanish.',
+                'Cambia el idioma a Español.',
+            ),
+            'Reset settings to initial.':(
+                'Сбрасывает настроки до изначальных.',
+                'Reset settings to initial.',
+                'Restablece la configuración a la inicial.',
+            ),
             '':(
                 '',
                 '',

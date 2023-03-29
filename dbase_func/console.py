@@ -1,5 +1,9 @@
 def reset_settings() -> None:
-    from data.const import CONSTPATH
+    try:
+        from data.const import CONSTPATH
+    except:
+        from data.base_const import BASEPATH
+        CONSTPATH: str = BASEPATH
     from os.path import join as join_path, split as split_file
     from localise_func.translator import localized_print
     DIR_COSNT: str = split_file(CONSTPATH)[0]
@@ -17,45 +21,42 @@ def reset_settings() -> None:
 def set_lang_rus() -> None:
     '''Switches language to Russian.'''
     from data.const import CONSTPATH
-    from data.lang_pack import LANGCODE
-    SETLANG: int = LANGCODE['1']
     with open(CONSTPATH, "rt", encoding="UTF-8") as readlang:
-        filestrs: list = readlang.readlines()
+        filestrs: list[str] = readlang.readlines()
     for index in range(len(filestrs)):
-        if "CODE_LANG: int = 1" in filestrs[index]:
-            filestrs[index]: str = f"CODE_LANG: int = {SETLANG}\n"
+        if "CODE_LANG: int =" in filestrs[index]:
+            filestrs[index]: str = f"CODE_LANG: int = 1\n"
+            break
     with open(CONSTPATH, "wt", encoding="UTF-8") as writelang:
-        print(filestrs, sep="", end="", file=writelang)
+        print(*filestrs, sep="", end="", file=writelang)
     exit()
 
 
 def set_lang_eng() -> None:
     '''Switches language to English.'''
     from data.const import CONSTPATH
-    from data.lang_pack import LANGCODE
-    SETLANG: int = LANGCODE['2']
     with open(CONSTPATH, "rt", encoding="UTF-8") as readlang:
-        filestrs: list = readlang.readlines()
+        filestrs: list[str] = readlang.readlines()
     for index in range(len(filestrs)):
-        if "CODE_LANG: int = 1" in filestrs[index]:
-            filestrs[index]: str = f"CODE_LANG: int = {SETLANG}\n"
+        if "CODE_LANG: int =" in filestrs[index]:
+            filestrs[index]: str = f"CODE_LANG: int = 2\n"
+            break
     with open(CONSTPATH, "wt", encoding="UTF-8") as writelang:
-        print(filestrs, sep="", end="", file=writelang)
+        print(*filestrs, sep="", end="", file=writelang)
     exit()
 
 
 def set_lang_esp() -> None:
     '''Switches language to Spanish.'''
     from data.const import CONSTPATH
-    from data.lang_pack import LANGCODE
-    SETLANG: int = LANGCODE['3']
     with open(CONSTPATH, "rt", encoding="UTF-8") as readlang:
-        filestrs: list = readlang.readlines()
+        filestrs: list[str] = readlang.readlines()
     for index in range(len(filestrs)):
-        if "CODE_LANG: int = 1" in filestrs[index]:
-            filestrs[index]: str = f"CODE_LANG: int = {SETLANG}\n"
+        if "CODE_LANG: int =" in filestrs[index]:
+            filestrs[index]: str = f"CODE_LANG: int = 3\n"
+            break
     with open(CONSTPATH, "wt", encoding="UTF-8") as writelang:
-        print(filestrs, sep="", end="", file=writelang)
+        print(*filestrs, sep="", end="", file=writelang)
     exit()
 
 
@@ -75,16 +76,22 @@ def checking_settings(args: tuple[str]) -> None:
         'lang_esp': ('Switches language to Spanish.', set_lang_esp),
     }
 
-    if len(args) !=  1:
+    if 'lang_rus' in args:
+        print('Специальный запуск')
+    elif 'lang_eng' in args:
+        print('Special Launch')
+    elif 'lang_esp':
+        print('asdf')
+    else:
         localized_print('Special Launch')
-        for arg in map(str.lower, args):
-            if arg in DATA_SETTINGS:
-                localized_print(DATA_SETTINGS[arg][KEY_DESCRIPTION])
-                DATA_SETTINGS[arg][KEY_FUNCK_ACTIVE]()
-            elif arg not in (FILEPATH, 'main.py'):
-                localized_print('Additional startup parameter', end = ' ')
-                print(arg, end = ' ')
-                localized_print('not found in the database')
-        localized_print('Recognized settings have been applied successfully')
-        localized_print('restart the application to continue')
-        exit()
+    for arg in map(str.lower, args):
+        if arg in DATA_SETTINGS:
+            DATA_SETTINGS[arg][KEY_FUNCK_ACTIVE]()
+            localized_print(DATA_SETTINGS[arg][KEY_DESCRIPTION])
+        elif arg not in (FILEPATH, 'main.py'):
+            localized_print('Additional startup parameter', end = ' ')
+            print(arg, end = ' ')
+            localized_print('not found in the database')
+    localized_print('Recognized settings have been applied successfully')
+    localized_print('restart the application to continue')
+    exit()

@@ -1,14 +1,17 @@
 from os.path import abspath
+from os.path import split as dirsplit, join as dirjoin
 
-
+CONSTPATH: str = abspath(__file__)
+DIRINDX: int = 0
+dirbase = dirsplit(CONSTPATH)[DIRINDX]
+BASEPATH: str = dirjoin(dirbase, "const.py")
 UNKNOWN: int = -1
 CODE_LANG: int = 1
 SUPER_USER: int = 0
-PATH: str = r'c:\Users\lavro\Desktop\ProCoding\python_scripts\vsblue\database_git\Database\baza.txt'
+PATH: str = r''
 SEPTAB: str = "\t" * 7
 PASS_LEN_MIN: int = 5
 MAX_RPT_CHR: int = 5
-CONSTPATH: str = abspath(__file__)
 
 
 POS_ANW: tuple = (
@@ -24,7 +27,7 @@ POS_ANW: tuple = (
 
 NEG_ANW: tuple = (
     "no",
-    "nah",
+    "nah"
     'nope',
     'n',
     'нет',

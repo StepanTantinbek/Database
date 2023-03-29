@@ -1,5 +1,10 @@
 def get_code():
-    from data.const import CODE_LANG, UNKNOWN, CONSTPATH
+    try:
+        from data.const import CODE_LANG, UNKNOWN, CONSTPATH
+    except:
+        from data.base_const import BASEPATH, UNKNOWN
+        CODE_LANG = 2
+        CONSTPATH: str = BASEPATH
     from data.lang_pack import LANGCODE
     from localise_func.translator import get_localized_print
     if CODE_LANG == UNKNOWN:
