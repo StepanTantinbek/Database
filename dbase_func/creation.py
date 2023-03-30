@@ -6,7 +6,7 @@
 def create_db() -> None:
     '''creates database.'''
     from data.const import CONSTPATH, DB_FILE_NAME
-    from os.path import join, split as splitdir
+    from os.path import join, split as splitdir, exists
     from interact_funcs.user  import user_answer
     from main import FILEPATH
     from localise_func.translator import localized_print
@@ -21,7 +21,7 @@ def create_db() -> None:
     with open(CONSTPATH, "rt", encoding="utf-8") as pathchange:
         oldfile: list = pathchange.readlines()
     for index in range(len(oldfile)):
-        if "PATH: str = " in oldfile[index]:
+        if oldfile[index].startswith("PATH: str ="):
             oldfile[index] = f"PATH: str = r'{path}'\n"
             break
     with open(CONSTPATH, "wt", encoding="utf-8") as writing:
@@ -34,19 +34,25 @@ def create_db() -> None:
     )
 
 
-def load_dbase() -> list:
+def load_dbase() -> dict:
     '''loads database to the code to work with it.'''
     from interact_funcs.base import read_row
-    from data.const import PATH, ROLES
+    from data.const import PATH, ROLES, UNKNOWN
+    keyid: int = UNKNOWN
     user_model: dict = {}
-    db = []
+    demo_model: list = []
+    db = {}
     with open(PATH, "rt", encoding="utf-8") as dbase:
-        db_read: tuple = read_row(dbase.readline())
+        db_read: dict = read_row(dbase.readline())
         for i in db_read:
-            user_model[i] = ""
+            if i == "ID":
+                keyid = i
+            else:
+                user_model[i] = ""
         for i in dbase.readlines():
-            db.append(user_model)
-            db[-1] = dict(zip(db_read, read_row(i)))
+            demo_model.append(user_model)
+            demo_model[-1] = dict(zip(db_read, read_row(i)))
+            db[keyid]: demo_model
             if not all((
                 (len(db[-1]) == 9),
                 (db[-1]["ID"].isdigit()),
@@ -87,14 +93,24 @@ def fill_db() -> None:
         print(list_to_strtab(userdata), file=filldb)
 
 
+def test_potential_db(path: str) -> bool:
+    ...
+
+
 def checkbase(code: bool=False) -> bool:
     '''checks if database is exist or damaged.'''
     from os.path import exists
     from interact_funcs.user  import user_answer
-    from data.const import PATH
+    from data.const import PATH, DB_FILE_NAME
     from localise_func.translator import get_localized_print
+    from dbase_func.data_work import filepath
+    from main import FILEPATH
     print = get_localized_print()
     notification: str = ""
+    potential_path_db: str = filepath(FILEPATH, DB_FILE_NAME)
+    if test_potential_db(potential_path_db):
+        #registr
+        return True
     if not exists(PATH) or code:
         if not code:
             notification = "Database does not exist"

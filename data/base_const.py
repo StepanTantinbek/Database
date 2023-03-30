@@ -1,18 +1,21 @@
 from os.path import abspath
-from os.path import split as dirsplit, join as dirjoin
+from dbase_func.data_work import filepath
+
 
 CONSTPATH: str = abspath(__file__)
+PATH: str = r''
+CONSTFILENAME: str = "const.py"
 DIRINDX: int = 0
-dirbase = dirsplit(CONSTPATH)[DIRINDX]
-BASEPATH: str = dirjoin(dirbase, "const.py")
+BASEPATH: str = filepath(CONSTPATH, CONSTFILENAME)
+
 UNKNOWN: int = -1
 CODE_LANG: int = UNKNOWN
 SUPER_USER: int = 0
-PATH: str = r''
-SEPTAB: str = "\t" * 7
 PASS_LEN_MIN: int = 5
 MAX_RPT_CHR: int = 5
 
+SEPTAB: str = "\t" * 7
+DB_FILE_NAME: str = r"baza.txt"
 
 POS_ANW: tuple = (
     "yes",
@@ -34,10 +37,6 @@ NEG_ANW: tuple = (
     'н',
 )
 
-
-DB_FILE_NAME: str = r"baza.txt"
-
-
 ORGPOL: tuple = (
     "ID",
     "LOGIN",
@@ -49,7 +48,6 @@ ORGPOL: tuple = (
     "LSO",
     "ROLE",
 )
-
 
 ROLES: tuple = (
     "User",

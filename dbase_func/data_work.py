@@ -63,3 +63,13 @@ def user_reg() -> None:
             OPT_FUNC[request]()
         else:
             print("Task is unknown.")
+
+
+def filepath(dirfile: str, filename: str) -> str:
+    '''Creates file in directory taken from first file 
+    variable and assigns the name from second variable.'''
+    from os.path import split as splitdir, join as joindir
+    DIRINDX: int = 0
+    dirname: str = splitdir(dirfile)[DIRINDX]
+    finalpath: str = joindir(dirname, filename)
+    return finalpath
