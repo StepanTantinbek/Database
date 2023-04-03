@@ -34,34 +34,6 @@ def create_db() -> None:
     )
 
 
-def load_dbase() -> dict:
-    '''loads database to the code to work with it.'''
-    from interact_funcs.base import read_row
-    from data.const import PATH, ROLES, UNKNOWN
-    keyid: int = UNKNOWN
-    user_model: dict = {}
-    demo_model: list = []
-    db = {}
-    with open(PATH, "rt", encoding="utf-8") as dbase:
-        db_read: dict = read_row(dbase.readline())
-        for i in db_read:
-            if i == "ID":
-                keyid = i
-            else:
-                user_model[i] = ""
-        for i in dbase.readlines():
-            demo_model.append(user_model)
-            demo_model[-1] = dict(zip(db_read, read_row(i)))
-            db[keyid]: demo_model
-            if not all((
-                (len(db[-1]) == 9),
-                (db[-1]["ID"].isdigit()),
-                (db[-1]["ROLE"] in ROLES)
-            )):
-                raise ValueError("Incorrect data in the database")
-    return db
-
-
 def save_dbase(dbase: list) -> None:
     '''uploads database to the main file.'''
     from interact_funcs.base import list_to_strtab
@@ -138,3 +110,42 @@ def checkbase(code: bool=False) -> bool:
         else:
             print("Database loaded sucsessfully.")
             return True
+        
+
+def load_dbase() -> dict:
+    '''loads database to the code to work with it.'''
+    from interact_funcs.base import read_row
+    from data import const
+    from importlib import reload
+    db: dict = {}
+    sucsess_pocess: bool = False
+    reload(const)
+    try:
+        with open(const.PATH, "rt", encoding="utf-8") as dbase:
+            title_rows_demo: str = dbase.readline()
+            if not title_rows_demo:
+                raise ValueError
+            title_rows: tuple[str] = read_row(title_rows_demo)
+            db_rows_list: tuple = dbase.readlines()
+            if not db_rows_list:
+                raise OSError
+            sucsess_pocess = True
+    except FileNotFoundError:
+        print("Database wasn't loaded due to incorrect path")
+    except ValueError:
+        print("Database is damaged, no title str found")
+    except OSError:
+        print("No users in database")
+    if sucsess_pocess:
+        for user_data in db_rows_list:
+            id, *rest_user_data = read_row(user_data)
+            db[id] = {}
+            for field, value in zip(title_rows[1:], rest_user_data):
+                db[id][field] = value
+        return db
+    else:
+        if checkbase(True):
+            return load_dbase
+        else:
+            print("Programm ended sucsessfully.")
+            exit()
