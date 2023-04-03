@@ -66,8 +66,8 @@ def user_reg() -> None:
 
 
 def filepath(dirfile: str, filename: str) -> str:
-    '''Creates file in directory taken from first file 
-    variable and assigns the name from second variable.'''
+    '''Creates file in directory from file variable
+    and name from second variable.'''
     from os.path import split as splitdir, join as joindir
     DIRINDX: int = 0
     dirname: str = splitdir(dirfile)[DIRINDX]

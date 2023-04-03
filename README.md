@@ -7,11 +7,13 @@ database prototype for social media
     + load_dbase — loads database to the code to work with it
     * save_dbase — uploads database to the main file
     - fill_db — if database is empty, it will add superviser, database ready
+    - test_potential_db — (DEVELOPING)
     - checkbase — checks if database is exist or damaged
 - data_work.py — includes functions to modify database
     - identification — adds new user to database
     - user_delete — deletes user from database
     - user_reg — menu of what user is able to do
+    - filepath — Creates file in directory from file variable and name from second variable
 ### interaction_funcs — package of programms to interaxt with user
 - base.py — includes functions to format data input by user for obtainment
     - perfect_dt — removes space chars and lowers all capital letters
