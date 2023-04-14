@@ -22,6 +22,7 @@ database prototype for social media
 - user.py — includes functions to interract with user
     - notification — prints negative or positive comment depending on statement status
     - user_answer — asks user a question and returns result depending on answer
+    - menu_authorization — Menu algorithm for user to use
 ### localise_func — package of programms
 - interact_user.py — includes functions to get data from user
     - get_code — Gets language code from user

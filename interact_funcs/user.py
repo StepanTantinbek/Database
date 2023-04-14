@@ -40,3 +40,35 @@ def user_answer(
             print(', '.join(posanswer) ,end = ' ')
             localized_print("or NEGATIVES: ")
             print(', '.join(neganswer))
+
+        
+def menu_authorization(database: dict) -> tuple[dict, int]:
+    '''Menu algorithm for user to use.'''
+    from typing import Callable
+    def log_in() -> int:
+        ...
+    def sign_up() -> int:
+        ...
+    def settings() -> None:
+        ...
+    def contact_us() -> str:
+        ...
+    MENU_ACTS: dict[str, str] = {
+        '1': 'Log in',
+        '2': 'Sign up',
+        '3': 'Settings',
+        '4': 'Contact us',
+        '5': 'Exit',
+    }
+    ACTS_FUNCS: dict[str, Callable[[], Union[str, int, None]]] = {
+        'Log in': log_in(),
+        'Sign up': sign_up(),
+        'Settings': settings(),
+        'Contact us': contact_us(),
+        'Exit': exit,
+    }
+
+    print("Action Menu")
+    print("")
+    for point, action in MENU_ACTS.items():
+        print(f"\n\t{point} : {action}")
