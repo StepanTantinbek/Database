@@ -6,7 +6,7 @@
 def create_db() -> None:
     '''creates database.'''
     from data.const import CONSTPATH, DB_FILE_NAME
-    from os.path import join, split as splitdir, exists
+    from os.path import join, split as splitdir
     from interact_funcs.user  import user_answer
     from main import FILEPATH
     from localise_func.translator import localized_print
@@ -115,6 +115,7 @@ def checkbase(code: bool=False) -> bool:
 def load_dbase() -> dict:
     '''loads database to the code to work with it.'''
     from interact_funcs.base import read_row
+    from interact_funcs.user import user_answer
     from data import const
     from importlib import reload
     db: dict = {}
@@ -133,7 +134,14 @@ def load_dbase() -> dict:
     except FileNotFoundError:
         print("Database wasn't loaded due to incorrect path")
     except ValueError:
-        print("Database is damaged, no title str found")
+        if user_answer(
+            "Do you want to fill in the database?: ",
+            notification="Databse is empty"
+        ):
+            fill_db()
+            exit()
+        else:
+            exit()
     except OSError:
         print("No users in database")
     if sucsess_pocess:

@@ -23,10 +23,10 @@ database prototype for social media
     - notification — prints negative or positive comment depending on statement status
     - user_answer — asks user a question and returns result depending on answer
 ### localise_func — package of programms
-- interact_user.py —
-
+- interact_user.py — includes functions to get data from user
+    - get_code — Gets language code from user
 - translator.py — Includes localised function of translator function
-    - lang_print_gen — Generator of localisation translator function
+    - get_localized_print — Generator of localisation translator function
         - lang_print — Prints phrase in chosen language
 ### verification_funcs — package of programms
 - auxiliary.py — includes functions to work with users personal data

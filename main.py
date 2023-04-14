@@ -10,7 +10,7 @@ FILEPATH: str = abspath(__file__)
 def main():
     '''Main program cycle.'''
     checking_settings(argv)
-    db: list = load_dbase()
+    db: dict = load_dbase()
     #svae_dbase(db)
     print(db)
 
