@@ -1,4 +1,5 @@
 def get_code():
+    '''Gets language code from user.'''
     try:
         from data.const import CODE_LANG, UNKNOWN, CONSTPATH
     except:
