@@ -44,10 +44,9 @@ def user_answer(
         
 def menu_authorization(database: dict) -> tuple[dict, int]:
     '''Menu algorithm for user to use.'''
-    from typing import Callable
+    from typing import Callable, Union
+    from dbase_func.data_work import registration
     def log_in() -> int:
-        ...
-    def sign_up() -> int:
         ...
     def settings() -> None:
         ...
@@ -61,10 +60,10 @@ def menu_authorization(database: dict) -> tuple[dict, int]:
         '5': 'Exit',
     }
     ACTS_FUNCS: dict[str, Callable[[], Union[str, int, None]]] = {
-        'Log in': log_in(),
-        'Sign up': sign_up(),
-        'Settings': settings(),
-        'Contact us': contact_us(),
+        'Log in': log_in,
+        'Sign up': registration,
+        'Settings': settings,
+        'Contact us': contact_us,
         'Exit': exit,
     }
 
@@ -72,3 +71,19 @@ def menu_authorization(database: dict) -> tuple[dict, int]:
     print("")
     for point, action in MENU_ACTS.items():
         print(f"\n\t{point} : {action}")
+
+    user_response: str = ""
+    func: Callable[[], Union[str, int, None]]
+    while True:
+        print("Choose an option: ")
+        user_response = input("> ").strip().capitalize()
+        if user_response in tuple(MENU_ACTS.keys()):
+            action: str = MENU_ACTS[user_response]
+            func = ACTS_FUNCS[action]
+            return func(database)
+        elif user_response in tuple(MENU_ACTS.values()):
+            func = ACTS_FUNCS[user_response]
+            return func(database)
+        else:
+            print("Choose an action or it's number")
+        

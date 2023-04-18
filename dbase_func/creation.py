@@ -47,22 +47,14 @@ def save_dbase(dbase: list) -> None:
 
 def fill_db() -> None:
     '''if database is empty, it will add superviser, database ready.'''
-    from time import time, ctime
-    from verification_funcs.password import checkpssw
-    from interact_funcs.base import list_to_strtab
+    from interact_funcs.base import list_to_strtab, dict_to_strtab
+    from dbase_func.data_work import create_user
     from data.const import PATH, ORGPOL
-    userdata: list = [0, ]
-    print("\n\n\tSuper user identification: \n\n")
-    for field in ORGPOL[1:-2]:
-        if field == "PASSWORD":
-            userdata.append(hash(checkpssw()))
-        else:
-            userdata.append(input(f"Type in new <{field}>: "))
-    userdata.append(ctime(time()))
-    userdata.append("Admin")
+    from data.const import SUPER_USER   
+    creator: dict = create_user(SUPER_USER, role="Admin")
     with open(PATH, "wt", encoding="utf-8") as filldb:
         print(list_to_strtab(ORGPOL), file=filldb)
-        print(list_to_strtab(userdata), file=filldb)
+        print(dict_to_strtab(creator), file=filldb)
 
 
 def test_potential_db(path: str) -> bool:

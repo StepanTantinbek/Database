@@ -3,23 +3,27 @@
 '''includes functions to modify database.'''
 
 
-def identification(role: str="User") -> list:
-    '''adds new user to database.'''
-    from verification_funcs.password import ceckpssw
-    from time import time, ctime
-    from verification_funcs.auxiliary import hash
-    global db
-    user_model: dict = {}
-    user_model["ID"] = str(int(db[-1]["ID"]) + 1)
-    for i in tuple(db[0].keys())[1:-2]:
-        if i == "PASSWORD":
-            user_model[i] = hash(ceckpssw())
+def create_user(id: int, role = "User") -> dict:
+    from data.const import ORGPOL
+    from verification_funcs.password import checkpssw
+    from datetime import datetime
+    new_user: dict = {}
+    new_user["ID"] = id
+    for field in ORGPOL[1:-2]:
+        if field == "PASSWORD":
+            new_user['PASSWORD'] = hash(checkpssw   )
         else:
-            user_model[i] = input(f"Type in new <{i}>: ")
-    user_model["LSO"] = ctime(time())
-    user_model["ROLE"] = role
-    db.append(user_model)
+            new_user[field] = input(f"Type in new <{field}>: ")
+    new_user["LSO"] = datetime.now()
+    new_user["ROLE"] = role
+    return new_user
 
+
+def registration(database: dict) -> tuple[dict, int]:
+    '''adds new user to database.'''
+    new_user_id: int = max(map(int, list(database.keys()))) + 1
+    new_user: dict = create_user(new_user_id)
+    return new_user
 
 def user_delete(userid: int) -> None:
     '''deletes user from database.'''
@@ -33,36 +37,6 @@ def user_delete(userid: int) -> None:
             del db[list_id.index(userid)]
         else:
             print("Cannot find user with this ID.")
-
-
-def user_reg() -> None:
-    '''menu of what user is able to do.'''
-    request: str = ""
-    P_S, P_L, P_C, P_E = range(1, 5)
-    MENU_OPTS: dict = {
-        str(P_S): "Sign in",
-        str(P_L): "Log in",
-        str(P_C): "Contact support",
-        str(P_E): "Exit",
-    }
-    OPT_FUNC: dict = {
-        "Sign in": identification,
-        "Log in": 1,
-        "Contact support": 2,
-        "Exit": 3,
-    }
-    print("\nMenu:\n\n")
-    for key, value in sorted(MENU_OPTS.items()):
-        print(f"\t{key} : {value}\n")
-    print("\n\n")
-    while request not in (tuple(MENU_OPTS.keys()) +tuple(MENU_OPTS.values())):
-        request = input("Chose option: ").strip().capitalize()
-        if request in MENU_OPTS.keys():
-            OPT_FUNC[MENU_OPTS[request]]()
-        elif request in MENU_OPTS.values():
-            OPT_FUNC[request]()
-        else:
-            print("Task is unknown.")
 
 
 def filepath(dirfile: str, filename: str) -> str:

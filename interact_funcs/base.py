@@ -13,7 +13,19 @@ def read_row(string: str) -> tuple:
     from data.const import SEPTAB
     return tuple(map(str.strip, string.split(SEPTAB)))
 
-def list_to_strtab(row: list) -> str:
+def list_to_strtab(row: __import__("typing").Union[list, tuple]) -> str:
     '''makes string with data types for user to put fot the database file.'''
+    return __import__("data.const").SEPTAB.join(map(str, tuple(row)))
+
+def dict_to_strtab(user_data: dict) -> str:
     from data.const import SEPTAB
-    return SEPTAB.join(map(str, tuple(row)))
+    tuple_from_dict: tuple = tuple(user_data.values())
+    return list_to_strtab(tuple_from_dict)
+
+
+def get_str_for_record_db(
+        object: __import__('typing').Union[list, tuple, dict]
+    ) -> str:
+    if type(object) is dict:
+        object =  tuple(object.values())
+    return __import__('data.const').SEPTAB.SEPTAB.join(map(str,object))
