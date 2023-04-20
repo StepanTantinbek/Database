@@ -55,7 +55,7 @@ def fill_db() -> None:
     from dbase_func.data_work import create_user
     from data.const import PATH, ORGPOL, SUPER_USER, SEPTAB
 
-    creator: dict = create_user(role="Admin")
+    creator: dict = create_user({}, role="Admin")
     creator_data: str = get_str_for_record_db(creator)
 
     with open(PATH, "wt", encoding="utf-8") as filldb:

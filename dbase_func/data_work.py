@@ -3,15 +3,24 @@
 '''includes functions to modify database.'''
 
 
-def create_user(role = "User") -> dict:
+def create_user(db: dict, role = "User") -> dict:
     from data.const import ORGPOL
     from verification_funcs.password import checkpssw
     from verification_funcs.auxiliary import hash
+    from verification_funcs.login import checklog
     from datetime import datetime
     new_user: dict = {}
     for field in ORGPOL[1:-2]:
         if field == "PASSWORD":
             new_user['PASSWORD'] = hash(checkpssw())
+        elif field  == "LOGIN":
+            login: str = input("Type in new <LOGIN>: ")
+            while checklog(login, db):
+                print(
+                    "This login is already in use\n"
+                    "Please create a unique login"
+                )
+                login: str = input("Type in new <LOGIN>: ")
         else:
             new_user[field] = input(f"Type in new <{field}>: ")
     new_user["LSO"] = datetime.now()
@@ -22,7 +31,7 @@ def create_user(role = "User") -> dict:
 def registration(database: dict) -> tuple[dict, int]:
     '''adds new user to database.'''
     new_user_id: int = max(map(int, list(database.keys()))) + 1
-    new_user: dict = create_user()
+    new_user: dict = create_user(database)
     database[new_user_id] = new_user
     return database, new_user_id
 

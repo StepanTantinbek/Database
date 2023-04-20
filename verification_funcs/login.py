@@ -2,13 +2,12 @@
 
 '''(BEING DEVELOPED)includes functions to work with users login.'''
 
-
-from verification_funcs.auxiliary import lencheck
-
-
-def logincheck(udatabase: list) -> str:
-    LOG_COD_INX: int = 1
-    logs: list = []
-    for userinfo in udatabase:
-        logs.append(userinfo[LOG_COD_INX])
-    print(logs)
+def checklog(login: str, database: dict) -> bool:
+    user_data_without_id: tuple[dict] = tuple(database.values())
+    logins: tuple[str] = tuple(
+        map(
+            lambda data: data["LOGIN"],
+            user_data_without_id
+        )
+    )
+    return login in logins
