@@ -34,27 +34,33 @@ def create_db() -> None:
     )
 
 
-def save_dbase(dbase: list) -> None:
+def save_dbase(dbase: dict) -> bool:
     '''uploads database to the main file.'''
-    from interact_funcs.base import list_to_strtab
-    from data.const import PATH
-    log_front: str = list_to_strtab(dbase[0].keys())
-    with open(PATH, "wt", encoding="utf-8") as file_save:
-        print(log_front, file=file_save)
-        for row in dbase:
-            print(list_to_strtab(row.values()), file=file_save)
+    from interact_funcs.base import get_str_for_record_db
+    from data.const import PATH, ORGPOL, SEPTAB
+    try:
+        with open(PATH, "wt", encoding="utf-8") as file_save:
+            print(*ORGPOL, sep=SEPTAB, file=file_save, end="")
+            for user_id, user_data in dbase.items():
+                print(f"\n{user_id}", end=SEPTAB, file=file_save)
+                print(get_str_for_record_db(user_data), file=file_save, end="")
+    except:
+        return False
+    return True
 
 
 def fill_db() -> None:
     '''if database is empty, it will add superviser, database ready.'''
-    from interact_funcs.base import list_to_strtab, dict_to_strtab
+    from interact_funcs.base import get_str_for_record_db
     from dbase_func.data_work import create_user
-    from data.const import PATH, ORGPOL
-    from data.const import SUPER_USER   
-    creator: dict = create_user(SUPER_USER, role="Admin")
+    from data.const import PATH, ORGPOL, SUPER_USER, SEPTAB
+
+    creator: dict = create_user(role="Admin")
+    creator_data: str = get_str_for_record_db(creator)
+
     with open(PATH, "wt", encoding="utf-8") as filldb:
-        print(list_to_strtab(ORGPOL), file=filldb)
-        print(dict_to_strtab(creator), file=filldb)
+        print(get_str_for_record_db(ORGPOL), file=filldb)
+        print(f"{SUPER_USER}{SEPTAB}{creator_data}", file=filldb, end="")
 
 
 def test_potential_db(path: str) -> bool:
@@ -149,3 +155,4 @@ def load_dbase() -> dict:
         else:
             print("Programm ended sucsessfully.")
             exit()
+

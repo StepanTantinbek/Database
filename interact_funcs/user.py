@@ -46,8 +46,37 @@ def menu_authorization(database: dict) -> tuple[dict, int]:
     '''Menu algorithm for user to use.'''
     from typing import Callable, Union
     from dbase_func.data_work import registration
-    def log_in() -> int:
-        ...
+    def log_in(databse: dict) -> tuple[dict, int]:
+        from verification_funcs.auxiliary import hash
+        def help_info(props: str) -> None:
+            print(
+                f"No user found with such {props}\n"
+                f"Ensure that your {props} is typed correctly\n"
+                "Ensure you don't mix up you name, "
+                f"surname or nickname with the {props}\n"
+            )
+        def checklog(login: str) -> bool:
+            user_data_without_id: tuple[dict] = tuple(database.values())
+            logins: tuple[str] = tuple(
+                map(
+                    lambda data: data["LOGIN"],
+                    user_data_without_id
+                )
+            )
+            return login in logins
+        print("Type in new login:")
+        login: str = input("> ")
+        while not checklog(login):
+            help_info("login")
+            login: str = input("> ")
+
+        while True:
+            print("Type in password")
+            password_hash: str = hash(input("> "))
+            for user_id, user_data in database.items():
+                if user_data["LOGIN"] == login and user_data["PASSWORD"] == password_hash:
+                    return database, user_id
+            help_info("password")
     def settings() -> None:
         ...
     def contact_us() -> str:

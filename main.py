@@ -1,5 +1,5 @@
 from os.path import abspath
-from dbase_func.creation import load_dbase
+from dbase_func.creation import load_dbase, save_dbase
 from dbase_func.console import checking_settings
 from interact_funcs.user import menu_authorization
 from sys import argv
@@ -13,8 +13,10 @@ def main():
     checking_settings(argv)
     db: dict = load_dbase()
     db, id = menu_authorization(db)
-    #svae_dbase(db)
-    print(db)
+    print(f'Hello {db[id]["NAME"]}! Glad to see you in the system')
+    if not save_dbase(db):
+        print("Database was not saved due to unknown eror")
+
 
 if __name__ == "__main__":
     main()
