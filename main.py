@@ -3,6 +3,7 @@ from dbase_func.creation import load_dbase, save_dbase
 from dbase_func.console import checking_settings
 from interact_funcs.user import menu_authorization
 from sys import argv
+from work_id_base.user_work import lookup_user
 
 
 FILEPATH: str = abspath(__file__)

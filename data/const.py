@@ -7,6 +7,12 @@ PATH: str = r'c:\Users\lavro\Desktop\ProCoding\python_scripts\vsblue\database_gi
 CONSTFILENAME: str = "const.py"
 DIRINDX: int = 0
 BASEPATH: str = filepath(CONSTPATH, CONSTFILENAME)
+RELATIONPATH: str = r"C:\Users\lavro\Desktop\ProCoding\python_scripts\vsblue\database_git\Database\baza_relations.txt"
+
+CODE_USER_EXISTS: int = 1
+CODE_USER_NON_EXISTS: int = 2
+DATABASE_NON_EXISTS: int = 3
+UNKNOWN_ERROR: int = 4
 
 UNKNOWN: int = -1
 CODE_LANG: int = 2
@@ -15,6 +21,8 @@ PASS_LEN_MIN: int = 5
 MAX_RPT_CHR: int = 5
 
 SEPTAB: str = "\t" * 7
+SPACE: str = " "
+SEPTAB_SPACES = SPACE * 25
 DB_FILE_NAME: str = r"baza.txt"
 
 POS_ANW: tuple = (
@@ -47,6 +55,20 @@ ORGPOL: tuple = (
     "NICKNAME",
     "LSO",
     "ROLE",
+)
+
+ORGPOL_RELATIONS: tuple[str] = (
+    "ID_USER",
+    "ID_FRIENDS",
+    "ID_CHAT"
+)
+
+ORGPOL_MSG: tuple[str] = (
+    "HASH_KEY_ID",
+    "ID_INTERLOCATOR",
+    "TEXT",
+    "DATE",
+    "IS_SEEN"
 )
 
 ROLES: tuple = (
