@@ -2,8 +2,11 @@ def relation_load(
         id: __import__("typing").Union[str, int],
         separator: str = __import__("data").const.SEPTAB_SPACES
     ) -> tuple[tuple[int], tuple[int]]:
+    '''Reads database and returns tuple of friends and chats of the user.'''
     def read_relation(string: str) -> tuple[tuple[ int], tuple[int]]:
+        '''Returns friends ids and chat ids.'''
         def split_tuple(element: str) -> tuple[int]:
+            '''Makes tuple for friends and chat ids.'''
             from data.const import SPACE
             step1 = element.strip()
             print(step1)

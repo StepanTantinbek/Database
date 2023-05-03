@@ -1,0 +1,19 @@
+Made fucntions:
+relation file:
+    user_work.py    lookup_user     Checks id existance in relations database
+    load.py         relation_load   Returns relations
+    user_model.py   add_new_friend  Function to add a friend into relation
+    user_model.py   add_new_chat    Function to add chat to relations
+
+Needed to be made functions:
+    relation file:
+    3.Function to delete friend from relations
+    4.Function to delete chat from relations
+
+    No sql msg:
+    1.checking if chat exists
+    2.creation key to chat
+    3.creating chat
+    4.uploading msgs
+    5.reading msgs
+    6.deletion of the chat
