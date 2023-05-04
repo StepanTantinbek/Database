@@ -56,7 +56,7 @@ def menu_authorization(database: dict) -> tuple[dict, int]:
                 "Ensure you don't mix up you name, "
                 f"surname or nickname with the {props}\n"
             )
-        print("Type in new login:")
+        print("Type in login:")
         login: str = input("> ")
         while not checklog(login, database):
             help_info("login")

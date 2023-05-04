@@ -61,3 +61,18 @@ class User():
         '''Make it remove it from baza_relations.'''
 
     def save(self) -> bool:
+        from data.const import SEPTAB, RELATIONPATH, SPACE
+        if self.is_change:
+            try:
+                with open(RELATIONPATH, "rt", encoding="utf-8") as readrelate:
+                    users: list[str] = readrelate.readlines()
+                for index, line in enumerate(users):
+                    if line.startswith(f"{self.id}{SPACE}"):
+                        users[index] = f"{self.id}{SEPTAB}{SPACE.join(self.id_list_friend)}{SEPTAB}{SPACE.join(self.id_list_chat)}"
+                with open(RELATIONPATH, "wt", encoding="utf-8") as writefile:
+                    print(*users, sep="\n", file=writefile)
+                return True
+            except:
+                print(f"There was an error while saving data for user: {self.name}")
+                return False
+        print(f"user {self.name} data was not modified and doesn't need to be saved")
