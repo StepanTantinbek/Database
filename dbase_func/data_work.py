@@ -20,7 +20,8 @@ def create_user(db: dict, role = "User") -> dict:
                     "This login is already in use\n"
                     "Please create a unique login"
                 )
-                login: str = input("Type in new <LOGIN>: ")
+                login = input("Type in new <LOGIN>: ")
+            new_user["LOGIN"] = login
         else:
             new_user[field] = input(f"Type in new <{field}>: ")
     new_user["LSO"] = datetime.now()

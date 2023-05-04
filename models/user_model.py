@@ -10,10 +10,11 @@ class User():
 
     is_change: bool
 
-    def __init__(self, get_id: int, id_user: int, data: int):
+    def __init__(self, id_user: int, data: int):
         from work_id_base.user_work import lookup_user
         from work_id_base.load import relation_load
 
+        print(data)
         self.id = id_user
         self.name = data["NAME"]
         self.age = int(data["AGE"])
@@ -23,7 +24,7 @@ class User():
         self.is_change = False
 
         if lookup_user(self.id):
-            self.id_list_friend, self.id_list_chat = relation_load
+            self.id_list_friend, self.id_list_chat = relation_load(self.id)
             self.id_list_friend = map(int, self.id_list_friend)
             self.id_list_chat = map(int, self.id_list_chat)
         else:
@@ -62,17 +63,23 @@ class User():
 
     def save(self) -> bool:
         from data.const import SEPTAB, RELATIONPATH, SPACE
+        list_friends: str = ""
+        list_chat: str = ""
         if self.is_change:
-            try:
+                if len(self.id_list_friend):
+                    list_friends = SPACE.join(self.id_list_friend)
+                if len(self.id_list_chat):
+                    list_chat = SPACE.join(self.id_list_chat)
+            #try:
                 with open(RELATIONPATH, "rt", encoding="utf-8") as readrelate:
                     users: list[str] = readrelate.readlines()
                 for index, line in enumerate(users):
                     if line.startswith(f"{self.id}{SPACE}"):
-                        users[index] = f"{self.id}{SEPTAB}{SPACE.join(self.id_list_friend)}{SEPTAB}{SPACE.join(self.id_list_chat)}"
+                        users[index] = f"{self.id}{SEPTAB}{list_friends}{SEPTAB}{list_chat}"
                 with open(RELATIONPATH, "wt", encoding="utf-8") as writefile:
                     print(*users, sep="\n", file=writefile)
                 return True
-            except:
+            #except:
                 print(f"There was an error while saving data for user: {self.name}")
                 return False
         print(f"user {self.name} data was not modified and doesn't need to be saved")

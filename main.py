@@ -14,7 +14,8 @@ def main():
     checking_settings(argv)
     db: dict = load_dbase()
     db, id = menu_authorization(db)
-    active_user: User - User(id, db[id])
+    #print(db)
+    active_user: User = User(id, db[id])
     active_user.add_new_friends(4)
     active_user.save()
     if not save_dbase(db):
